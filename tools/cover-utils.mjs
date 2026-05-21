@@ -11,10 +11,14 @@ export function slugFromFilename (name) {
   return m ? m[1] : base
 }
 
-export function getSeed (slug, category) {
+/**
+ * @param {number} [revision] 封面风格版本，>0 时追加 v{n}，换图时由 updateimg 递增
+ */
+export function getSeed (slug, category, revision = 0) {
   const parts = []
   if (category) parts.push(category)
   parts.push(slug)
+  if (revision > 0) parts.push(`v${revision}`)
   return encodeURIComponent(parts.join('-'))
 }
 

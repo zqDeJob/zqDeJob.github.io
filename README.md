@@ -36,8 +36,10 @@ pnpm exec hexo server -p 4001
 | `pnpm run build` | 生成静态站点到 `public/`（本地预览用，勿提交 Git） |
 | `pnpm run clean` | 清除 `public/` 与缓存 `db.json` |
 | `pnpm exec hexo new "文章标题"` | 在 `source/_posts/` 新建文章 |
-| `pnpm run covers:fetch` | 下载文章封面到 `source/img/covers/` |
-| `pnpm run covers:sync` | 下载封面并写入文章 Front Matter |
+| `pnpm run getimg` | 仅为**缺少封面**的文章下载封面 |
+| `pnpm run updateimg` | **换一批封面**（版本 +1，强制重下全部） |
+| `pnpm run covers:fetch` | 同 `getimg` |
+| `pnpm run covers:sync` | 同 `getimg` |
 
 也可使用 `pnpm exec hexo <命令>`，与上表等价。
 
@@ -86,11 +88,12 @@ categories:
 cover: false
 ```
 
-手动批量补图（一般不必，自动流程已覆盖）：
+| 命令 | 何时用 |
+|------|--------|
+| `pnpm run getimg` | 补漏：只处理还没有封面的文章 |
+| `pnpm run updateimg` | 换图：所有文章强制换一批新风格（会更新 `source/.cover-revision`） |
 
-```bash
-pnpm run getimg
-```
+`updateimg` 每执行一次，全局版本 +1（如 `v0→v1`），Picsum 的 seed 会变，本地 `covers/*.jpg` 会覆盖。换图后建议 commit `source/img/covers/` 与 `source/.cover-revision` 再部署。
 
 手动指定封面仍可在 Front Matter 写 `cover: /img/xxx.jpg` 或外链。
 

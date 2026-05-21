@@ -19,6 +19,19 @@ function getConfig () {
   )
 }
 
+function readCoverRevision () {
+  try {
+    const fs = require('fs')
+    const path = require('path')
+    const file = path.join(hexo.source_dir, '.cover-revision')
+    if (!fs.existsSync(file)) return 0
+    const n = parseInt(fs.readFileSync(file, 'utf8').trim(), 10)
+    return Number.isFinite(n) && n >= 0 ? n : 0
+  } catch {
+    return 0
+  }
+}
+
 function getSeed (article) {
   const parts = []
   const cats = article.categories
@@ -27,6 +40,8 @@ function getSeed (article) {
     if (name) parts.push(name)
   }
   parts.push(article.slug || article.title || 'post')
+  const rev = readCoverRevision()
+  if (rev > 0) parts.push(`v${rev}`)
   return encodeURIComponent(parts.join('-'))
 }
 
