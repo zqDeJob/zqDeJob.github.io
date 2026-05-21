@@ -7,16 +7,12 @@
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "server": "hexo server",
+    "getimg": "node tools/fetch-covers.mjs",
     "covers:fetch": "node tools/fetch-covers.mjs",
-    "covers:sync": "node tools/fetch-covers.mjs --write-fm"
+    "covers:sync": "node tools/fetch-covers.mjs"
   },
   "hexo": {
     "version": "7.3.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "hexo-util"
-    ]
   },
   "dependencies": {
     "hexo": "^7.0.0",
@@ -24,6 +20,7 @@
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-index": "^3.0.0",
     "hexo-generator-tag": "^2.0.0",
+    "hexo-generator-searchdb": "^1.5.0",
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-marked": "^6.0.0",
     "hexo-renderer-pug": "^3.0.0",
