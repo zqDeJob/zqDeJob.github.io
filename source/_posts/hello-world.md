@@ -8,6 +8,7 @@ tags:
   - Butterfly
   - 入门
 ---
+cover: /img/covers/hello-world.jpg
 
 欢迎来到 [Hexo](https://hexo.io/)！这是你的第一篇文章。更多说明请查看 [官方文档](https://hexo.io/docs/)。使用 Hexo 时若遇到问题，可在 [故障排查](https://hexo.io/docs/troubleshooting.html) 中查找答案，或在 [GitHub](https://github.com/hexojs/hexo/issues) 上提问。
 
