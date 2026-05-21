@@ -55,7 +55,7 @@ function coverDisabled (article) {
 }
 
 function applyCover (article, cfg) {
-  if (!article || coverDisabled(article) || article.cover) return
+  if (!cfg.enable || !article || coverDisabled(article) || article.cover) return
 
   const cover = resolveCover(article, cfg)
   article.cover = cover
@@ -73,9 +73,19 @@ function applyToPosts (posts, cfg) {
 
 function applyToAllPosts (cfg) {
   if (!cfg.enable) return
+
   const posts = hexo.locals.get('posts')
   if (posts && posts.length) applyToPosts(posts, cfg)
+
+  const Post = hexo.model('Post')
+  if (Post) {
+    Post.find({}).forEach(post => applyCover(post, cfg))
+  }
 }
+
+hexo.extend.filter.register('after_load', () => {
+  applyToAllPosts(getConfig())
+})
 
 hexo.extend.filter.register('after_init', () => {
   applyToAllPosts(getConfig())
@@ -83,6 +93,11 @@ hexo.extend.filter.register('after_init', () => {
 
 hexo.extend.filter.register('before_generate', () => {
   applyToAllPosts(getConfig())
+})
+
+hexo.extend.filter.register('before_post_render', data => {
+  applyCover(data, getConfig())
+  return data
 })
 
 hexo.extend.filter.register('template_locals', locals => {

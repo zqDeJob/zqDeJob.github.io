@@ -36,8 +36,14 @@ pnpm exec hexo server -p 4001
 | `pnpm run build` | 生成静态站点到 `public/`（本地预览用，勿提交 Git） |
 | `pnpm run clean` | 清除 `public/` 与缓存 `db.json` |
 | `pnpm exec hexo new "文章标题"` | 在 `source/_posts/` 新建文章 |
+| `pnpm run covers:fetch` | 下载文章封面到 `source/img/covers/` |
+| `pnpm run covers:sync` | 下载封面并写入文章 Front Matter |
 
 也可使用 `pnpm exec hexo <命令>`，与上表等价。
+
+标签页、分类页依赖 `source/tags/index.md`、`source/categories/index.md`（`type: tags` / `type: categories`）。
+
+导航 **版本**（`/version/`）在每次构建时由 `scripts/generate-version.js` 根据 `git log` 自动生成提交记录表。
 
 ## 项目结构
 
@@ -70,26 +76,20 @@ categories:
 
 ### 文章封面（自动配图）
 
-未写 `cover` 的文章会由 `scripts/auto-cover.js` 按 **分类 + 标题 slug** 从 [Picsum](https://picsum.photos/) 取稳定配图（每篇不同，重建不变）。
+- **`hexo new "标题"`** 创建文章后，会自动下载封面到 `source/img/covers/`，并在 Front Matter 写入 `cover: /img/covers/xxx.jpg`（`scripts/auto-fetch-cover.js`）。
+- **`pnpm run build` / `server`** 或 CI 构建前，会补全尚未有封面的文章。
+- 展示时由 `scripts/auto-cover.js` 读取 `cover` 或本地图；未下载时回退 Picsum 在线图。
 
-在 `_config.yml` 的 `auto_cover` 可开关或改尺寸。若某篇不要封面：
+在 `_config.yml` 的 `auto_cover` 可关闭 `auto_fetch` 或 `write_fm`。若某篇不要封面：
 
 ```yaml
 cover: false
 ```
 
-若要**下载到本地**（加载更快、不依赖外网）：
+手动批量补图（一般不必，自动流程已覆盖）：
 
 ```bash
-pnpm run covers:fetch
-```
-
-然后把 `_config.yml` 里 `auto_cover.provider` 改为 `local`。
-
-一次性把 `cover` 写入各文章 Front Matter（可选）：
-
-```bash
-pnpm run covers:sync
+pnpm run getimg
 ```
 
 手动指定封面仍可在 Front Matter 写 `cover: /img/xxx.jpg` 或外链。
@@ -98,9 +98,14 @@ pnpm run covers:sync
 
 在 `_config.yml` 的 `site_images` 中配置（默认使用 `/img/home-page.png`），构建时由 `scripts/site-images.js` 同步到 Butterfly，无需改 `_config.butterfly.yml` 里的 `index_img`。
 
+## 搜索与评论
+
+- **搜索**：已启用 Butterfly `local_search`，依赖 `hexo-generator-searchdb`，构建后导航栏会出现搜索入口。
+- **评论**：已配置 [Utterances](https://utteranc.es/)（`zqDeJob/zqDeJob.github.io`）。首次使用前请在仓库安装 GitHub App：[Utterances](https://github.com/apps/utterances)，并允许在 Issues 中创建评论帖。
+
 ## 部署
 
-推送到 `main` / `master` 分支后，[GitHub Actions](.github/workflows/deploy.yml) 会自动执行 `hexo generate` 并发布到 GitHub Pages。
+推送到 `main` / `master` 分支后，[GitHub Actions](.github/workflows/deploy.yml) 会自动拉取文章封面、`hexo generate` 并发布到 GitHub Pages。
 
 1. 仓库 **Settings → Pages → Build and deployment** 选择 **GitHub Actions**
 2. `git push` 后可在 **Actions** 页查看构建状态
@@ -131,16 +136,18 @@ npx hexo server
 
 ### `ERR_PNPM_IGNORED_BUILDS`（hexo-util 构建脚本被忽略）
 
-pnpm 10+ 默认不执行依赖的安装脚本。本项目已在 `package.json` 的 `pnpm.onlyBuiltDependencies` 中允许 `hexo-util`。
+pnpm 11 起不再读取 `package.json` 里的 `pnpm` 字段，本项目改为：
 
-若仍出现该提示，删除 `node_modules` 后重新安装：
+- **pnpm 11+**：根目录 `pnpm-workspace.yaml` 中的 `allowBuilds.hexo-util: true`
+- **pnpm 10**：`.npmrc` 中的 `only-built-dependencies[]=hexo-util`
 
-```bash
-Remove-Item -Recurse -Force node_modules
-pnpm install
+若仍报错，删除 `node_modules` 后重装，或执行：
+
+```powershell
+pnpm approve-builds
 ```
 
-也可交互式批准：`pnpm approve-builds`（选择 `hexo-util`）。
+在列表里为 `hexo-util` 选择允许（会写入 `pnpm-workspace.yaml`）。
 
 ## 参考链接
 

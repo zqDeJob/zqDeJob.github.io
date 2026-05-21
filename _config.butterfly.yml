@@ -22,6 +22,7 @@ menu:
   归档: /archives/ || fas fa-archive
   分类: /categories/ || fas fa-folder-open
   标签: /tags/ || fas fa-tags
+  版本: /version/ || fas fa-code-branch
 
 # --------------------------------------
 # Code Blocks Settings
@@ -53,10 +54,10 @@ social:
 # Image Settings
 # --------------------------------------
 
-favicon: /img/favicon.png
+favicon: /img/AI.svg
 
 avatar:
-  img: /img/butterfly-icon.png
+  img: /img/AI.svg
   effect: false
 
 # Disable all banner images
@@ -102,8 +103,8 @@ cover:
   index_enable: true
   aside_enable: true
   archives_enable: true
-  # When cover is not set, the default cover is displayed（已由 scripts/auto-cover.js 按文章分配）
-  default_cover:
+  # 未设置 cover 时的兜底图（scripts/auto-cover.js 会为每篇文章再分配封面）
+  default_cover: /img/home-page.png
 
 # Replace Broken Images
 error_img:
@@ -151,11 +152,14 @@ index_top_img_height:
 # The subtitle on homepage
 subtitle:
   enable: true
-  # Typewriter Effect（false = 开启打字机，true = 仅静态显示第一行）
-  effect: false
+  # Typewriter Effect（true = 打字机效果，false = 仅静态显示第一行）
+  effect: true
   # Customize typed.js
   # https://github.com/mattboldt/typed.js/#customization
   typed_option:
+    typeSpeed: 80
+    backSpeed: 50
+    loop: true
   # Source - Call the third-party service API (Chinese only)
   # It will show the source first, then show the content of sub
   # Choose: false/1/2/3
@@ -291,10 +295,10 @@ aside:
       enable: true
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/zqDeJob/zqDeJob.github.io
   card_announcement:
     enable: true
-    content: This is my Blog
+    content: 【这是一个公告，只是我还没想好放啥...】
   card_recent_post:
     enable: true
     # If set 0 will show all
@@ -476,8 +480,8 @@ math:
 search:
   # Choose: algolia_search / local_search / docsearch
   # leave it empty if you don't need search
-  use:
-  placeholder:
+  use: local_search
+  placeholder: 搜索文章
 
   # Algolia Search
   algolia_search:
@@ -487,7 +491,7 @@ search:
   # Local Search
   local_search:
     # Preload the search data when the page loads.
-    preload: false
+    preload: true
     # Show top n results per article, show all results by setting to -1
     top_n_per_article: 1
     # Unescape html strings to the readable one.
@@ -535,7 +539,7 @@ comments:
   # Leave it empty if you don't need comments
   # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo/Giscus/Remark42/Artalk
   # Format of two comments system : Disqus,Waline
-  use:
+  use: Utterances
   # Display the comment name next to the button
   text: true
   # Lazyload: The comment system will be load when comment element enters the browser's viewport.
@@ -597,10 +601,10 @@ waline:
   pageview: false
   option:
 
-# Utterances
+# Utterances（基于 GitHub Issues，需在仓库安装 https://github.com/apps/utterances ）
 # https://utteranc.es/
 utterances:
-  repo:
+  repo: zqDeJob/zqDeJob.github.io
   # Issue Mapping: pathname/url/title/og:title
   issue_term: pathname
   # Theme: github-light/github-dark/github-dark-orange/icy-dark/dark-blue/photon-dark
@@ -779,8 +783,8 @@ site_verification:
 # The user interface setting of category and tag page
 # Choose: index - same as Homepage UI / default - same as archives UI
 # leave it empty or index
-category_ui:
-tag_ui:
+category_ui: index
+tag_ui: index
 
 # Rounded corners for UI elements
 rounded_corners_ui: true

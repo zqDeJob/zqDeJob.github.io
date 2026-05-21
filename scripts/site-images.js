@@ -12,6 +12,12 @@ function applySiteImages () {
   const tc = hexo.theme.config
   const home = site.home_page || site.default_top
 
+  if (site.favicon) tc.favicon = site.favicon
+  if (site.avatar) {
+    if (!tc.avatar || typeof tc.avatar !== 'object') tc.avatar = { effect: false }
+    tc.avatar.img = site.avatar
+  }
+
   if (home) {
     tc.index_img = home
     tc.default_top_img = site.default_top || home
