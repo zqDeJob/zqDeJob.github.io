@@ -127,6 +127,21 @@ npx hexo server
 
 推荐使用 pnpm，与 CI 环境一致，避免依赖解析问题。
 
+## 常见问题
+
+### `ERR_PNPM_IGNORED_BUILDS`（hexo-util 构建脚本被忽略）
+
+pnpm 10+ 默认不执行依赖的安装脚本。本项目已在 `package.json` 的 `pnpm.onlyBuiltDependencies` 中允许 `hexo-util`。
+
+若仍出现该提示，删除 `node_modules` 后重新安装：
+
+```bash
+Remove-Item -Recurse -Force node_modules
+pnpm install
+```
+
+也可交互式批准：`pnpm approve-builds`（选择 `hexo-util`）。
+
 ## 参考链接
 
 - [Hexo 文档](https://hexo.io/docs/)
