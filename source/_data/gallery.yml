@@ -1,0 +1,28 @@
+# 画廊资料：修改本文件后重新 build / server 即可更新页面
+# 人物图：配置 baike 词条链接后执行 pnpm run gallery:img（从百度百科 posterBg 头图下载）
+
+people:
+  - name: 胡歌
+    file: huge
+    baike: https://baike.baidu.com/item/胡歌/312718
+    image: /img/gallery/people/huge.jpg
+    note: 从《仙剑》到《琅琊榜》，戏里戏外都有一种克制与韧劲。不是狂热的粉丝，只是某个阶段里，觉得他把「成长」演得很具体。
+  - name: 田曦薇
+    file: tianxiwei
+    baike: https://baike.baidu.com/item/田曦薇
+    image: /img/gallery/people/tianxiwei.jpg
+    note: 气质偏灵、镜头感好，属于「一看就记得住」的那类演员。记录在这里，更多是纪念自己那段时间爱追轻松下饭剧的状态。
+
+works:
+  movies:
+    - title: 肖申克的救赎
+      image: https://picsum.photos/seed/gallery-movie-shawshank/400/280
+      note: 关于耐心与希望的老片。适合在某个低谷的周末独自看完，结尾在雨里张开双臂的镜头，记了很多年。
+  tv:
+    - title: 琅琊榜
+      image: https://picsum.photos/seed/gallery-tv-langya/400/280
+      note: 权谋与情义平衡得不错，台词耐嚼。梅长苏的「择主」逻辑，和胡歌的表演一起，构成那几年我对古装剧的标杆。
+  novels:
+    - title: 三体
+      image: https://picsum.photos/seed/gallery-novel-threebody/400/280
+      note: 硬科幻外壳下是对文明与道德的追问。第一部的悬念感最强，后面两本越读越沉，适合分阶段慢慢啃。

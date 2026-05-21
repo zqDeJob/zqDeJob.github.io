@@ -8,6 +8,7 @@
 const fs = require('fs')
 const path = require('path')
 const { execSync } = require('child_process')
+const { writeIfChanged } = require('./lib/write-if-changed')
 
 const FRONT_MATTER = `---
 title: 版本记录
@@ -100,9 +101,9 @@ function writeVersionPage () {
     body = buildMarkdown([], cfg)
   }
 
-  fs.writeFileSync(file, body, 'utf8')
-  hexo.log.info('generate-version: wrote %s', path.relative(hexo.base_dir, file))
+  if (writeIfChanged(file, body)) {
+    hexo.log.info('generate-version: wrote %s', path.relative(hexo.base_dir, file))
+  }
 }
 
 hexo.extend.filter.register('before_generate', writeVersionPage)
-hexo.on('ready', writeVersionPage)

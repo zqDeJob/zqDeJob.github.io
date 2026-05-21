@@ -8,6 +8,7 @@
     "deploy": "hexo deploy",
     "server": "hexo server",
     "getimg": "node tools/fetch-covers.mjs",
+    "gallery:img": "node tools/fetch-baike-gallery.mjs",
     "updateimg": "node tools/update-covers.mjs",
     "covers:fetch": "node tools/fetch-covers.mjs",
     "covers:sync": "node tools/fetch-covers.mjs"
