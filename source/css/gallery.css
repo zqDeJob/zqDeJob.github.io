@@ -1,0 +1,154 @@
+/* 画廊 · 资料展示柜（撑开 Butterfly 无侧栏页宽度） */
+/* Butterfly 主题色变量为 --default-bg-color，非 --theme-color */
+
+:root {
+  --gallery-accent: var(--default-bg-color, #49b1f5);
+}
+.layout:has(.gallery-page) {
+  max-width: min(1680px, 94vw) !important;
+  width: 100% !important;
+  padding-left: max(20px, 2vw) !important;
+  padding-right: max(20px, 2vw) !important;
+}
+
+@media screen and (min-width: 2000px) {
+  .layout:has(.gallery-page) {
+    max-width: min(1920px, 92vw) !important;
+  }
+}
+
+.layout:has(.gallery-page) > div:first-child {
+  width: 100% !important;
+  padding: 44px clamp(24px, 4vw, 80px) !important;
+}
+
+.gallery-page {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 3rem;
+}
+
+.gallery-intro {
+  color: var(--font-color);
+  opacity: 0.85;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+
+.gallery-section {
+  margin-bottom: 3rem;
+}
+
+.gallery-section-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--gallery-accent);
+  display: inline-block;
+}
+
+.gallery-section-desc {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.gallery-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.gallery-grid--people {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.gallery-grid--works {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+@media screen and (min-width: 1400px) {
+  .gallery-grid--people {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .gallery-grid--works {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+.gallery-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.gallery-card__frame {
+  position: relative;
+  background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+  padding: 0.65rem;
+}
+
+.gallery-card__frame--portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.gallery-card__frame--landscape {
+  aspect-ratio: 10 / 7;
+}
+
+.gallery-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.gallery-card__body {
+  padding: 1.1rem 1.25rem 1.25rem;
+}
+
+.gallery-card__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+  color: var(--font-color);
+}
+
+.gallery-card__note {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin: 0;
+  color: var(--font-color);
+  opacity: 0.82;
+}
+
+.gallery-works-group {
+  margin-bottom: 2rem;
+}
+
+.gallery-works-group:last-child {
+  margin-bottom: 0;
+}
+
+.gallery-works-label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  opacity: 0.9;
+}
+
+.gallery-works-label i {
+  margin-right: 0.35rem;
+  color: var(--gallery-accent);
+}

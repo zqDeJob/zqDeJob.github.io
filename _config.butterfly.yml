@@ -23,6 +23,7 @@ menu:
   分类: /categories/ || fas fa-folder-open
   标签: /tags/ || fas fa-tags
   版本: /version/ || fas fa-code-branch
+  画廊: /gallery/ || fas fa-images
 
 # --------------------------------------
 # Code Blocks Settings

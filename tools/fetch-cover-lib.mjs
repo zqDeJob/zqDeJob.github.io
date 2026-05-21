@@ -89,8 +89,11 @@ export async function ensureCoverForPost (postFilePath, opts = {}) {
   const coverPath = localCoverPath(slug)
 
   if (!force && fs.existsSync(dest) && writeFm && !hasCover(fm)) {
-    fs.writeFileSync(postFilePath, upsertCoverInFrontMatter(raw, coverPath), 'utf8')
-    if (!quiet) console.log(`${slug}: 已有封面图，已写入 front matter`)
+    const next = upsertCoverInFrontMatter(raw, coverPath)
+    if (next !== raw) {
+      fs.writeFileSync(postFilePath, next, 'utf8')
+      if (!quiet) console.log(`${slug}: 已有封面图，已写入 front matter`)
+    }
     return { slug, coverPath, wroteFm: true, cached: true }
   }
 
@@ -108,7 +111,8 @@ export async function ensureCoverForPost (postFilePath, opts = {}) {
   await download(url, dest)
 
   if (writeFm) {
-    fs.writeFileSync(postFilePath, upsertCoverInFrontMatter(raw, coverPath), 'utf8')
+    const next = upsertCoverInFrontMatter(raw, coverPath)
+    if (next !== raw) fs.writeFileSync(postFilePath, next, 'utf8')
   }
 
   if (!quiet) console.log(writeFm ? 'ok（已写入 cover）' : 'ok')

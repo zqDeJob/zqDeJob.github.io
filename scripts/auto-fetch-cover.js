@@ -38,26 +38,28 @@ function runFetchForPost (postPath) {
   }
 }
 
-function fetchAllMissing () {
+// hexo new "标题" 创建文章后
+hexo.on('new', runFetchForPost)
+
+function isServerCmd () {
+  const cmd = hexo.env.cmd
+  return cmd === 's' || cmd === 'server'
+}
+
+// 仅完整 generate / CI 构建时批量补封面；server 模式不改 source，避免监听死循环
+hexo.extend.filter.register('before_generate', () => {
+  if (isServerCmd()) return
   const cfg = getAutoCoverConfig()
   if (!cfg.enable || !cfg.auto_fetch) return
 
   const script = path.join(hexo.base_dir, 'tools', 'fetch-all-covers.mjs')
-  const node = process.execPath
-
   try {
-    execFileSync(node, [script], {
+    execFileSync(process.execPath, [script, '--quiet'], {
       cwd: hexo.base_dir,
-      stdio: cfg.quiet_fetch ? 'pipe' : 'inherit',
+      stdio: 'pipe',
       env: process.env
     })
   } catch (e) {
     hexo.log.warn('auto-fetch-cover batch failed:', e.message)
   }
-}
-
-// hexo new "标题" 创建文章后
-hexo.on('new', runFetchForPost)
-
-// 构建 / 本地预览前，补全尚未下载封面的文章
-hexo.extend.filter.register('before_generate', fetchAllMissing)
+})
