@@ -18,6 +18,7 @@ import {
   coverDisabled,
   hasCover
 } from './cover-utils.mjs'
+import { readCoverRevision } from './cover-revision.mjs'
 
 export function download (url, dest) {
   return new Promise((resolve, reject) => {
@@ -56,12 +57,16 @@ export function upsertCoverInFrontMatter (raw, coverPath) {
  * @param {string} opts.root 项目根目录
  * @param {boolean} opts.writeFm 是否写入 front matter 的 cover
  * @param {boolean} opts.quiet
+ * @param {boolean} opts.force 强制重新下载（updateimg）
+ * @param {number} opts.revision 指定版本号，默认读 source/.cover-revision
  */
 export async function ensureCoverForPost (postFilePath, opts = {}) {
   const root = opts.root || path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
   const outDir = path.join(root, 'source', 'img', 'covers')
   const writeFm = opts.writeFm !== false
   const quiet = opts.quiet === true
+  const force = opts.force === true
+  const revision = opts.revision ?? readCoverRevision(root)
 
   if (!fs.existsSync(postFilePath)) {
     throw new Error(`文章不存在: ${postFilePath}`)
@@ -74,7 +79,7 @@ export async function ensureCoverForPost (postFilePath, opts = {}) {
     if (!quiet) console.log('跳过（cover: false）')
     return { skipped: true, reason: 'disabled' }
   }
-  if (hasCover(fm)) {
+  if (!force && hasCover(fm)) {
     if (!quiet) console.log('跳过（已有 cover）')
     return { skipped: true, reason: 'has_cover' }
   }
@@ -83,20 +88,23 @@ export async function ensureCoverForPost (postFilePath, opts = {}) {
   const dest = path.join(outDir, `${slug}.jpg`)
   const coverPath = localCoverPath(slug)
 
-  if (fs.existsSync(dest) && writeFm && !hasCover(fm)) {
+  if (!force && fs.existsSync(dest) && writeFm && !hasCover(fm)) {
     fs.writeFileSync(postFilePath, upsertCoverInFrontMatter(raw, coverPath), 'utf8')
     if (!quiet) console.log(`${slug}: 已有封面图，已写入 front matter`)
     return { slug, coverPath, wroteFm: true, cached: true }
   }
 
-  if (fs.existsSync(dest)) {
+  if (!force && fs.existsSync(dest)) {
     return { slug, coverPath, cached: true }
   }
 
-  const seed = getSeed(slug, firstCategory(raw))
+  const seed = getSeed(slug, firstCategory(raw), revision)
   const url = picsumUrl(seed, COVER_WIDTH, COVER_HEIGHT)
 
-  if (!quiet) process.stdout.write(`${slug} 下载封面 ... `)
+  if (!quiet) {
+    const tag = force ? '更新封面' : '下载封面'
+    process.stdout.write(`${slug} ${tag} (v${revision}) ... `)
+  }
   await download(url, dest)
 
   if (writeFm) {
@@ -104,7 +112,7 @@ export async function ensureCoverForPost (postFilePath, opts = {}) {
   }
 
   if (!quiet) console.log(writeFm ? 'ok（已写入 cover）' : 'ok')
-  return { slug, coverPath, wroteFm: writeFm }
+  return { slug, coverPath, wroteFm: writeFm, revision }
 }
 
 export async function ensureAllPostCovers (root, opts = {}) {
@@ -118,7 +126,9 @@ export async function ensureAllPostCovers (root, opts = {}) {
       const r = await ensureCoverForPost(path.join(postsDir, file), {
         root,
         writeFm: opts.writeFm,
-        quiet: opts.quiet
+        quiet: opts.quiet,
+        force: opts.force,
+        revision: opts.revision
       })
       results.push({ file, ...r })
     } catch (e) {
