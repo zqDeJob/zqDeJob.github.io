@@ -6,12 +6,15 @@ comments: false
 top_img: false
 ---
 
-本页记录 [zqDeJob/zqDeJob.github.io](https://github.com/zqDeJob/zqDeJob.github.io) 仓库的 Git 提交历史（构建时自动生成，默认最近 80 条）。
+本页记录 [zqDeJob/zqDeJob.github.io](https://github.com/zqDeJob/zqDeJob.github.io) 仓库的 Git 提交历史（构建时自动生成，默认最近 10 条）。
 
 [在 GitHub 查看完整提交记录](https://github.com/zqDeJob/zqDeJob.github.io/commits/master/)
 
 | 日期 | 提交 | 作者 | 说明 |
 | --- | --- | --- | --- |
+| 2026-06-04 | [ed18972](https://github.com/zqDeJob/zqDeJob.github.io/commit/ed1897242afcc8e0f7dbad3ee26b6697487d5a75) | Martin | refactor: 替换画廊功能为Demo展示页 |
+| 2026-06-04 | [f125435](https://github.com/zqDeJob/zqDeJob.github.io/commit/f125435ea86225bcc907d85ba668e259de560e3e) | Martin | docs: 更新飞鸟云机场的注册地址和防丢失链接 |
+| 2026-05-21 | [5a84a22](https://github.com/zqDeJob/zqDeJob.github.io/commit/5a84a2299d2cecd3ade257037e51c9307492839e) | 7angfff | feat: 新增画廊页面 |
 | 2026-05-21 | [9b0ef08](https://github.com/zqDeJob/zqDeJob.github.io/commit/9b0ef08dd3c7d65f3a5fab60b99790457fc92a76) | 7angfff | chore: 为三篇博客文章添加封面图片 |
 | 2026-05-21 | [1e10e5e](https://github.com/zqDeJob/zqDeJob.github.io/commit/1e10e5ebf9527b5bc19e37f9507a72f6b53b8903) | 7angfff | feat(covers): 新增 updateimg 命令，可强制重新下载所有文章封面并更新版本 |
 | 2026-05-21 | [4cf8a2c](https://github.com/zqDeJob/zqDeJob.github.io/commit/4cf8a2c33ff088a6a883b5cafbc1ec08ed3a36d7) | 7angfff | chore: 删除AI专栏和生活乐子专栏相关文件 |

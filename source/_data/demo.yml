@@ -5,6 +5,12 @@ projects:
     description: "简洁的待办事项管理工具，支持添加、完成、删除任务"
     tags: ["HTML", "CSS", "JavaScript"]
   
+  - title: "图片 Base64 转换器"
+    type: html
+    path: "/demo/base64-tool.html"
+    description: "图片与 Base64 互转工具，支持拖拽、粘贴和下载"
+    tags: ["工具", "Base64", "图片"]
+  
   - title: "动态时钟"
     type: html
     path: "/demo/projects/clock.html"
