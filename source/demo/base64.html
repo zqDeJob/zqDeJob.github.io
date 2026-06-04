@@ -276,12 +276,6 @@
       background: #e0e0e0;
     }
 
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-
     .toast {
       position: fixed;
       bottom: 30px;
@@ -292,9 +286,6 @@
       border-radius: 10px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.3s ease;
@@ -480,15 +471,11 @@
     const toast = document.getElementById('toast');
 
     let currentImageData = null;
-    let encodeImgElement = null;
-    let decodeImgElement = null;
 
     function showToast(message, type = 'success') {
       toast.textContent = message;
       toast.className = `toast ${type} show`;
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
+      setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     function formatSize(bytes) {
@@ -509,16 +496,6 @@
       if (placeholder) placeholder.style.display = 'block';
     }
 
-    function createImageElement(src) {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = '预览';
-      img.style.maxWidth = '100%';
-      img.style.maxHeight = '100%';
-      img.style.objectFit = 'contain';
-      return img;
-    }
-
     function imageToBase64(file) {
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -528,11 +505,15 @@
         currentImageData = base64;
 
         clearPreview(encodePreviewContainer);
-        encodeImgElement = createImageElement(base64);
-        encodePreviewContainer.appendChild(encodeImgElement);
+        const img = document.createElement('img');
+        img.src = base64;
+        img.alt = '预览';
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '100%';
+        img.style.objectFit = 'contain';
+        encodePreviewContainer.appendChild(img);
         const placeholder = encodePreviewContainer.querySelector('.preview-placeholder');
         if (placeholder) placeholder.style.display = 'none';
-        
         showToast('✅ 图片转换成功！');
       };
       reader.readAsDataURL(file);
@@ -541,7 +522,6 @@
     function pasteImage(e) {
       const items = e.clipboardData?.items;
       if (!items) return;
-
       for (const item of items) {
         if (item.type.startsWith('image/')) {
           const file = item.getAsFile();
@@ -554,19 +534,9 @@
       }
     }
 
-    dropZone.addEventListener('click', () => {
-      fileInput.click();
-    });
-
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('dragover');
-    });
-
-    dropZone.addEventListener('dragleave', () => {
-      dropZone.classList.remove('dragover');
-    });
-
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropZone.classList.remove('dragover');
@@ -584,10 +554,7 @@
     });
 
     document.addEventListener('paste', (e) => {
-      const activeElement = document.activeElement;
-      if (activeElement === base64Input) {
-        return;
-      }
+      if (document.activeElement === base64Input) return;
       pasteImage(e);
     });
 
@@ -609,7 +576,6 @@
       outputSize.textContent = '0 KB';
       clearPreview(encodePreviewContainer);
       currentImageData = null;
-      encodeImgElement = null;
       showToast('🗑️ 已清空');
     });
 
@@ -620,32 +586,33 @@
         return;
       }
 
-      try {
-        if (!base64.startsWith('data:image/')) {
-          showToast('❌ 无效的 Base64 格式', 'error');
-          return;
-        }
-
-        clearPreview(decodePreviewContainer);
-        decodeImgElement = createImageElement(base64);
-        
-        decodeImgElement.onload = function() {
-          decodePreviewContainer.appendChild(decodeImgElement);
-          const placeholder = decodePreviewContainer.querySelector('.preview-placeholder');
-          if (placeholder) placeholder.style.display = 'none';
-          decodeInfo.style.display = 'flex';
-          decodeSize.textContent = formatSize(base64.length);
-          currentImageData = base64;
-          showToast('✅ Base64 解码成功！');
-        };
-        
-        decodeImgElement.onerror = function() {
-          clearPreview(decodePreviewContainer);
-          showToast('❌ Base64 解码失败', 'error');
-        };
-      } catch (err) {
-        showToast('❌ Base64 解码失败', 'error');
+      if (!base64.startsWith('data:image/')) {
+        showToast('❌ 无效的 Base64 格式', 'error');
+        return;
       }
+
+      clearPreview(decodePreviewContainer);
+      const img = document.createElement('img');
+      img.src = base64;
+      img.alt = '预览';
+      img.style.maxWidth = '100%';
+      img.style.maxHeight = '100%';
+      img.style.objectFit = 'contain';
+
+      img.onload = function() {
+        decodePreviewContainer.appendChild(img);
+        const placeholder = decodePreviewContainer.querySelector('.preview-placeholder');
+        if (placeholder) placeholder.style.display = 'none';
+        decodeInfo.style.display = 'flex';
+        decodeSize.textContent = formatSize(base64.length);
+        currentImageData = base64;
+        showToast('✅ Base64 解码成功！');
+      };
+
+      img.onerror = function() {
+        clearPreview(decodePreviewContainer);
+        showToast('❌ Base64 解码失败', 'error');
+      };
     });
 
     document.getElementById('clear-decode-btn').addEventListener('click', () => {
@@ -653,13 +620,11 @@
       clearPreview(decodePreviewContainer);
       decodeInfo.style.display = 'none';
       currentImageData = null;
-      decodeImgElement = null;
       showToast('🗑️ 已清空');
     });
 
     document.getElementById('download-btn').addEventListener('click', () => {
       if (!currentImageData) return;
-
       const link = document.createElement('a');
       link.href = currentImageData;
       link.download = `image_${Date.now()}.png`;
