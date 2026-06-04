@@ -18,37 +18,74 @@ type: "demo"
   </div>
   
   <div class="demo-grid" id="demo-grid">
-    {% for project in site.data.demo.projects %}
-    <article class="demo-card" data-type="{{ project.type }}">
+    <article class="demo-card" data-type="html">
       <div class="card-content">
-        <h3 class="card-title">{{ project.title }}</h3>
-        <p class="card-desc">{{ project.description }}</p>
+        <h3 class="card-title">图片 Base64 转换器</h3>
+        <p class="card-desc">图片与 Base64 互转工具，支持粘贴、拖拽、复制和下载。</p>
         <div class="card-tags">
-          {% for tag in project.tags %}
-          <span class="tag">{{ tag }}</span>
-          {% endfor %}
+          <span class="tag">工具</span>
+          <span class="tag">Base64</span>
+          <span class="tag">图片</span>
         </div>
       </div>
       <div class="card-actions">
-        {% if project.type == 'html' %}
-        <a href="{{ project.path }}" class="btn btn-primary" target="_blank">
+        <a href="/demo/base64.html" class="btn btn-primary" target="_blank">
           <i class="fas fa-external-link-alt"></i> 预览
         </a>
-        {% elif project.type == 'url' %}
-        <a href="{{ project.url }}" class="btn btn-primary" target="_blank" rel="noopener">
+      </div>
+      <div class="card-badge" data-type="html">HTML</div>
+    </article>
+
+    <article class="demo-card" data-type="url">
+      <div class="card-content">
+        <h3 class="card-title">GitHub 仓库</h3>
+        <p class="card-desc">我的 GitHub 代码仓库。</p>
+        <div class="card-tags">
+          <span class="tag">GitHub</span>
+          <span class="tag">Code</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="https://github.com/zqDeJob" class="btn btn-primary" target="_blank" rel="noopener">
           <i class="fas fa-external-link-alt"></i> 访问
         </a>
-        {% elif project.type == 'article' %}
-        <a href="/{{ project.post_slug }}/" class="btn btn-primary">
+      </div>
+      <div class="card-badge" data-type="url">URL</div>
+    </article>
+
+    <article class="demo-card" data-type="url">
+      <div class="card-content">
+        <h3 class="card-title">Hexo 官方文档</h3>
+        <p class="card-desc">Hexo 静态博客框架官方文档。</p>
+        <div class="card-tags">
+          <span class="tag">Documentation</span>
+          <span class="tag">Hexo</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="https://hexo.io/docs/" class="btn btn-primary" target="_blank" rel="noopener">
+          <i class="fas fa-external-link-alt"></i> 访问
+        </a>
+      </div>
+      <div class="card-badge" data-type="url">URL</div>
+    </article>
+
+    <article class="demo-card" data-type="article">
+      <div class="card-content">
+        <h3 class="card-title">快速开始指南</h3>
+        <p class="card-desc">开发环境搭建与工具链配置指南。</p>
+        <div class="card-tags">
+          <span class="tag">Guide</span>
+          <span class="tag">Dev</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="/2026/05/21/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%B7%A5%E5%85%B7%E9%93%BE/" class="btn btn-primary">
           <i class="fas fa-file-text"></i> 阅读
         </a>
-        {% endif %}
       </div>
-      <div class="card-badge" data-type="{{ project.type }}">
-        {% if project.type == 'html' %}HTML{% elif project.type == 'url' %}URL{% else %}Article{% endif %}
-      </div>
+      <div class="card-badge" data-type="article">Article</div>
     </article>
-    {% endfor %}
   </div>
 </div>
 
