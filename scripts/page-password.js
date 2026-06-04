@@ -7,7 +7,7 @@
  */
 
 const PASSWORD = '342601'
-const STORAGE_KEY = 'zqdejob_gallery_auth_v1'
+const STORAGE_KEY = 'zqdejob_page_auth_v1'
 
 function getProtectedPaths () {
   const list = hexo.config.password_pages

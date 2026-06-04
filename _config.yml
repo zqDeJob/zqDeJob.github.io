@@ -115,8 +115,7 @@ exclude:
 ignore:
 
 # 需输入密码才能访问的页面路径（以 / 开头，与 URL 一致；密码见 scripts/page-password.js）
-password_pages:
-  - /gallery/
+password_pages: []
 
 # 站点图片（由 scripts/site-images.js 同步到 Butterfly 主题）
 site_images:
