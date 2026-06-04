@@ -5,31 +5,11 @@
 .avatar-img:hover {
   animation: none !important;
   transform: none !important;
-  filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.8)) drop-shadow(0 0 20px rgba(79, 172, 254, 0.6)) drop-shadow(0 0 30px rgba(79, 172, 254, 0.4));
-  box-shadow: 
-    0 0 10px rgba(79, 172, 254, 0.8),
-    0 0 20px rgba(79, 172, 254, 0.6),
-    0 0 30px rgba(79, 172, 254, 0.4),
-    inset 0 0 20px rgba(79, 172, 254, 0.2);
+  filter: none !important;
+  box-shadow: none !important;
+  border: 2px solid rgba(200, 200, 200, 0.6) !important;
 }
 
 .avatar-img:hover::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #4facfe, #00f2fe, #4facfe, #00f2fe);
-  background-size: 400% 400%;
-  animation: borderGlow 2s ease infinite;
-  z-index: -1;
-  filter: blur(8px);
-}
-
-@keyframes borderGlow {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  display: none !important;
 }

@@ -1,18 +1,18 @@
 'use strict'
 
 /**
- * 根据 git log 生成「版本」页面（source/version/index.md）
+ * 根据 GitHub API 生成「版本」页面（source/version/index.md）
  * 配置见 _config.yml 的 repo
  */
 
 const fs = require('fs')
 const path = require('path')
-const { execSync } = require('child_process')
+const axios = require('axios')
 const { writeIfChanged } = require('./lib/write-if-changed')
 
 const FRONT_MATTER = `---
 title: 版本记录
-date: 2026-05-21 12:00:00
+date: ${new Date().toISOString().replace('T', ' ').substring(0, 19)}
 type: page
 comments: false
 top_img: false
@@ -25,7 +25,7 @@ function getRepoConfig () {
   return {
     slug: repo.github || 'zqDeJob/zqDeJob.github.io',
     branch: repo.branch || 'master',
-    limit: repo.changelog_limit || 80
+    limit: repo.changelog_limit || 10
   }
 }
 
@@ -36,26 +36,26 @@ function escapeTableCell (text) {
     .trim()
 }
 
-function fetchCommits (cfg) {
-  const format = '%H|%h|%ad|%an|%s'
-  const out = execSync(
-    `git log --pretty=format:"${format}" --date=short -n ${cfg.limit}`,
-    { cwd: hexo.base_dir, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }
-  )
-  return out
-    .trim()
-    .split('\n')
-    .filter(Boolean)
-    .map(line => {
-      const [full, short, date, author, ...msg] = line.split('|')
-      return {
-        full,
-        short,
-        date,
-        author,
-        message: msg.join('|')
+async function fetchCommitsFromAPI (cfg) {
+  try {
+    const response = await axios.get(`https://api.github.com/repos/${cfg.slug}/commits`, {
+      params: {
+        per_page: cfg.limit,
+        sha: cfg.branch
       }
     })
+
+    return response.data.map(commit => ({
+      full: commit.sha,
+      short: commit.sha.substring(0, 7),
+      date: new Date(commit.commit.author.date).toISOString().split('T')[0],
+      author: commit.author ? commit.author.login : commit.commit.author.name,
+      message: commit.commit.message.split('\n')[0]
+    }))
+  } catch (error) {
+    hexo.log.warn('generate-version: GitHub API request failed,', error.message)
+    return []
+  }
 }
 
 function buildMarkdown (commits, cfg) {
@@ -63,7 +63,7 @@ function buildMarkdown (commits, cfg) {
   const lines = [
     FRONT_MATTER.trimEnd(),
     '',
-    `本页记录 [${cfg.slug}](${repoUrl}) 仓库的 Git 提交历史（构建时自动生成，默认最近 ${cfg.limit} 条）。`,
+    `本页记录 [${cfg.slug}](${repoUrl}) 仓库的 Git 提交历史（构建时自动获取，最近 ${cfg.limit} 条）。`,
     '',
     `[在 GitHub 查看完整提交记录](${repoUrl}/commits/${cfg.branch}/)`,
     '',
@@ -79,14 +79,14 @@ function buildMarkdown (commits, cfg) {
   }
 
   if (!commits.length) {
-    lines.push('| — | — | — | 暂无提交记录（本地未初始化 Git 或 CI 浅克隆） |')
+    lines.push('| — | — | — | 获取提交记录失败 |')
   }
 
   lines.push('')
   return lines.join('\n')
 }
 
-function writeVersionPage () {
+async function writeVersionPage () {
   const cfg = getRepoConfig()
   const dir = path.join(hexo.source_dir, 'version')
   const file = path.join(dir, 'index.md')
@@ -95,9 +95,10 @@ function writeVersionPage () {
 
   let body
   try {
-    body = buildMarkdown(fetchCommits(cfg), cfg)
+    const commits = await fetchCommitsFromAPI(cfg)
+    body = buildMarkdown(commits, cfg)
   } catch (e) {
-    hexo.log.warn('generate-version: git log failed,', e.message)
+    hexo.log.warn('generate-version: failed,', e.message)
     body = buildMarkdown([], cfg)
   }
 
