@@ -1,0 +1,30 @@
+projects:
+  - title: "待办事项应用"
+    type: html
+    path: "/demo/projects/todo.html"
+    description: "简洁的待办事项管理工具，支持添加、完成、删除任务"
+    tags: ["HTML", "CSS", "JavaScript"]
+  
+  - title: "动态时钟"
+    type: html
+    path: "/demo/projects/clock.html"
+    description: "使用 Canvas 绘制的动态时钟，显示实时时间"
+    tags: ["Canvas", "JavaScript"]
+  
+  - title: "GitHub 仓库"
+    type: url
+    url: "https://github.com/zqDeJob"
+    description: "我的 GitHub 代码仓库"
+    tags: ["GitHub", "Code"]
+  
+  - title: "Hexo 官方文档"
+    type: url
+    url: "https://hexo.io/docs/"
+    description: "Hexo 静态博客框架官方文档"
+    tags: ["Documentation", "Hexo"]
+  
+  - title: "快速开始指南"
+    type: article
+    post_slug: "快速开始-开发环境与工具链"
+    description: "开发环境搭建与工具链配置指南"
+    tags: ["Guide", "Dev"]

@@ -47,11 +47,16 @@ pnpm exec hexo server -p 4001
 
 导航 **版本**（`/version/`）在每次构建时由 `scripts/generate-version.js` 根据 `git log` 自动生成提交记录表。
 
-导航 **画廊**（`/gallery/`）展示人物与作品收藏，数据在 `source/_data/gallery.yml` 维护，构建时由 `scripts/generate-gallery.js` 生成页面。人物头像可在配置 `baike` 词条后执行 `pnpm run gallery:img` 从百度百科拉取。
+导航 **Demo**（`/demo/`）展示个人项目、工具集和精彩片段，支持三种内容类型：
+- **自定义 HTML**：放置在 `source/demo/projects/` 目录
+- **外部 URL**：直接链接到外部网站
+- **文章片段**：链接到博客内的文章
+
+配置文件 `source/_data/demo.yml` 管理所有 demo 项目。
 
 ### 页面访问密码
 
-在 `_config.yml` 的 `password_pages` 中配置需加密的 path（当前仅 `/gallery/`）。密码在 `scripts/page-password.js` 中写死，输入正确后当前浏览器会话内可访问（`sessionStorage`）。静态站为前端校验，仅作简单遮挡，不能替代服务端鉴权。
+在 `_config.yml` 的 `password_pages` 中配置需加密的 path。密码在 `scripts/page-password.js` 中写死，输入正确后当前浏览器会话内可访问（`sessionStorage`）。静态站为前端校验，仅作简单遮挡，不能替代服务端鉴权。
 
 ## 项目结构
 

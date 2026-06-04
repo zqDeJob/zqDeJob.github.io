@@ -23,7 +23,7 @@ menu:
   分类: /categories/ || fas fa-folder-open
   标签: /tags/ || fas fa-tags
   版本: /version/ || fas fa-code-branch
-  画廊: /gallery/ || fas fa-images
+  Demo: /demo/ || fas fa-play-circle
 
 # --------------------------------------
 # Code Blocks Settings
@@ -299,7 +299,7 @@ aside:
       link: https://github.com/zqDeJob/zqDeJob.github.io
   card_announcement:
     enable: true
-    content: 【这是一个公告，只是我还没想好放啥...】
+    content: 静态部署可用 [Vercel](https://vercel.com/)
   card_recent_post:
     enable: true
     # If set 0 will show all
