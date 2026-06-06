@@ -55,10 +55,10 @@ social:
 # Image Settings
 # --------------------------------------
 
-favicon: /img/AI.svg
+favicon: /img/logo.png
 
 avatar:
-  img: /img/AI.svg
+  img: /img/logo.png
   effect: false
 
 # Disable all banner images
