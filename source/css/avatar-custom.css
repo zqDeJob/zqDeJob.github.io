@@ -13,3 +13,12 @@
 .avatar-img:hover::before {
   display: none !important;
 }
+
+.avatar-img > img {
+  transition: all 0.3s ease;
+}
+
+.avatar-img:hover > img {
+  animation: none !important;
+  transform: none !important;
+}
