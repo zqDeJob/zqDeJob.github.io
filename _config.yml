@@ -120,8 +120,8 @@ password_pages: []
 
 # 站点图片（由 scripts/site-images.js 同步到 Butterfly 主题）
 site_images:
-  favicon: /img/AI.svg
-  avatar: /img/AI.svg
+  favicon: /img/logo.png
+  avatar: /img/logo.png
   home_page: /img/home-page.png
   default_top: /img/home-page.png
   categories:
