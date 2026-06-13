@@ -47,12 +47,6 @@ pnpm exec hexo server -p 4001
 
 导航 **版本**（`/version/`）在每次构建时由 `scripts/generate-version.js` 根据本地 `git log` 自动生成提交记录表（CI 在 `hexo generate` 前也会执行 `pnpm run version:sync`）。
 
-可选：启用仓库自带的 Git hook，提交前自动刷新版本页：
-
-```bash
-git config core.hooksPath .githooks
-```
-
 导航 **Demo**（`/demo/`）展示个人项目、工具集和精彩片段，支持三种内容类型：
 - **自定义 HTML**：放置在 `source/demo/projects/` 目录
 - **外部 URL**：直接链接到外部网站

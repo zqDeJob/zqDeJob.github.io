@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-# 提交前刷新版本页，使 source/version/index.md 与 git log 同步
-set -e
-cd "$(git rev-parse --show-toplevel)"
-node scripts/sync-version.js
-git add source/version/index.md
