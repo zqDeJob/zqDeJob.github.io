@@ -7,6 +7,7 @@ tags:
   - Codex
   - AI工具
 ---
+cover: /img/covers/codex-快速使用.jpg
 
 辅助工具：cc-switch 、codex ++ 、模型api-key
 
