@@ -45,6 +45,9 @@ jobs:
         run: pnpm run covers:fetch
         continue-on-error: true
 
+      - name: Sync version page from git log
+        run: pnpm run version:sync
+
       - name: Build site
         run: pnpm exec hexo generate
 
