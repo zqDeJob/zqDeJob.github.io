@@ -20,23 +20,52 @@ import {
 } from './cover-utils.mjs'
 import { readCoverRevision } from './cover-revision.mjs'
 
+const DOWNLOAD_TIMEOUT_MS = 30_000
+
 export function download (url, dest) {
   return new Promise((resolve, reject) => {
     fs.mkdirSync(path.dirname(dest), { recursive: true })
     const file = fs.createWriteStream(dest)
-    https.get(url, res => {
+    let settled = false
+
+    const fail = (err) => {
+      if (settled) return
+      settled = true
+      file.close(() => {
+        if (fs.existsSync(dest)) fs.unlinkSync(dest)
+        reject(err)
+      })
+    }
+
+    const timer = setTimeout(() => {
+      req.destroy()
+      fail(new Error(`下载超时（${DOWNLOAD_TIMEOUT_MS}ms）: ${url}`))
+    }, DOWNLOAD_TIMEOUT_MS)
+
+    const req = https.get(url, res => {
       if (res.statusCode === 302 || res.statusCode === 301) {
+        clearTimeout(timer)
         file.close()
         if (fs.existsSync(dest)) fs.unlinkSync(dest)
         return download(res.headers.location, dest).then(resolve).catch(reject)
       }
       if (res.statusCode !== 200) {
-        reject(new Error(`HTTP ${res.statusCode} for ${url}`))
+        clearTimeout(timer)
+        fail(new Error(`HTTP ${res.statusCode} for ${url}`))
         return
       }
       res.pipe(file)
-      file.on('finish', () => file.close(resolve))
-    }).on('error', reject)
+      file.on('finish', () => {
+        if (settled) return
+        settled = true
+        clearTimeout(timer)
+        file.close(resolve)
+      })
+    })
+    req.on('error', (err) => {
+      clearTimeout(timer)
+      fail(err)
+    })
   })
 }
 

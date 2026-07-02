@@ -41,15 +41,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Fetch post covers
-        run: pnpm run covers:fetch
-        continue-on-error: true
-
       - name: Sync version page from git log
         run: pnpm run version:sync
 
       - name: Build site
         run: pnpm exec hexo generate
+        timeout-minutes: 5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

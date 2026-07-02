@@ -9,6 +9,7 @@ tags:
   - TypeScript
   - 开源
 ---
+cover: /img/covers/从零搭建-Obsidian插件-Plugin-Helper.jpg
 
 ## 为什么要做这个插件
 
