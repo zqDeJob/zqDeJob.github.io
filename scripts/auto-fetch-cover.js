@@ -49,6 +49,8 @@ function isServerCmd () {
 // 仅完整 generate / CI 构建时批量补封面；server 模式不改 source，避免监听死循环
 hexo.extend.filter.register('before_generate', () => {
   if (isServerCmd()) return
+  // CI 应使用已提交的封面资源，避免构建时访问 picsum 卡住
+  if (process.env.CI === 'true') return
   const cfg = getAutoCoverConfig()
   if (!cfg.enable || !cfg.auto_fetch) return
 
