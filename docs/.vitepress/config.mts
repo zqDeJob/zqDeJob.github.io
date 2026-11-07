@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 
 const docsRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const CATEGORY_ORDER = ['研发二三事', 'AI', '生活乐子']
+const CATEGORY_ORDER = ['研发二三事', 'AI']
+const LIFE_CATEGORY = '生活乐子'
 const COMIC_MODULE = 'AI 漫剧'
 const COMIC_GROUPS = ['AI 人物skill', 'AI 表情skill', 'AI 打斗skill']
 const SKIP_DIRS = new Set(['public', '.vitepress', 'version', 'node_modules'])
@@ -121,7 +122,7 @@ function categoryItems (posts: PostEntry[], category: string): SidebarNode[] {
 function buildSidebar () {
   const posts: PostEntry[] = []
   collectPosts(docsRoot, posts)
-  const grouped = new Set([...CATEGORY_ORDER, ...COMIC_GROUPS])
+  const grouped = new Set([...CATEGORY_ORDER, LIFE_CATEGORY, ...COMIC_GROUPS])
   const extras = [...new Set(posts.map((post) => post.category))]
     .filter((category) => !grouped.has(category))
 
@@ -141,6 +142,11 @@ function buildSidebar () {
     }))
     .filter((group) => group.items.length > 0)
 
+  const lifeItems = categoryItems(posts, LIFE_CATEGORY)
+  const lifeGroup = lifeItems.length > 0
+    ? [{ text: LIFE_CATEGORY, collapsed: true, items: lifeItems }]
+    : []
+
   const extraGroups = extras
     .map((category) => ({
       text: category,
@@ -157,7 +163,8 @@ function buildSidebar () {
       items: comicItems
     })
   }
-  return [...sidebar, ...extraGroups]
+  // 顺序：研发二三事 → AI → AI 漫剧 → 生活乐子 → 其他
+  return [...sidebar, ...lifeGroup, ...extraGroups]
 }
 
 export default defineConfig({
