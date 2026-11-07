@@ -13,6 +13,11 @@
   display: none !important;
 }
 
+/* 顶栏统计：显示在右侧 */
+.VPNavBar .site-stats {
+  display: inline-flex;
+}
+
 /* 提示词整段可复制，同时按页面宽度换行 */
 .vp-doc div[class*='language-text'] code {
   white-space: pre-wrap !important;
