@@ -1,0 +1,20 @@
+:root {
+  --vp-nav-logo-height: 40px;
+}
+
+/* 外观开关和 GitHub 始终留在顶栏，不收进「···」 */
+.VPNavBar .VPNavBarAppearance,
+.VPNavBar .VPNavBarSocialLinks {
+  display: flex !important;
+  align-items: center;
+}
+
+.VPNavBar .VPNavBarExtra {
+  display: none !important;
+}
+
+/* 提示词整段可复制，同时按页面宽度换行 */
+.vp-doc div[class*='language-text'] code {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+}

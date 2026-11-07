@@ -2,3 +2,5 @@ node_modules/
 public/
 db.json
 .deploy*/
+docs/.vitepress/cache/
+docs/.vitepress/dist/

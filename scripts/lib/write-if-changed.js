@@ -8,7 +8,7 @@ function normalize (text) {
 }
 
 /**
- * 仅当内容有变化时写入，避免 hexo server 监听 source 后死循环
+ * 仅当内容有变化时写入，避免版本页在内容未变时反复改写
  * @returns {boolean} 是否发生了写入
  */
 function writeIfChanged (file, content) {

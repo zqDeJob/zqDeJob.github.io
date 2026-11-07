@@ -1,18 +1,21 @@
 'use strict'
 
 const { execFileSync } = require('child_process')
-const fs = require('fs')
 const path = require('path')
 const { writeIfChanged } = require('./write-if-changed')
 
 const FIELD_SEP = '\x1f'
+const DEFAULTS = {
+  slug: 'zqDeJob/zqDeJob.github.io',
+  branch: 'master',
+  limit: 10
+}
 
-function getRepoConfig (hexoConfig) {
-  const repo = (hexoConfig && hexoConfig.repo) || {}
+function getRepoConfig (overrides = {}) {
   return {
-    slug: repo.github || 'zqDeJob/zqDeJob.github.io',
-    branch: repo.branch || 'master',
-    limit: repo.changelog_limit || 10
+    slug: overrides.github || DEFAULTS.slug,
+    branch: overrides.branch || DEFAULTS.branch,
+    limit: overrides.changelog_limit || DEFAULTS.limit
   }
 }
 
@@ -23,13 +26,25 @@ function escapeTableCell (text) {
     .trim()
 }
 
+function detectBranch (repoRoot, fallback) {
+  try {
+    const name = execFileSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], {
+      cwd: repoRoot,
+      encoding: 'utf8'
+    }).trim()
+    if (name && name !== 'HEAD') return name
+  } catch {
+    // 脱离 HEAD 时沿用默认分支名，只用于 GitHub 链接
+  }
+  return fallback
+}
+
 function fetchCommitsFromGit (repoRoot, cfg) {
   try {
     const output = execFileSync(
       'git',
       [
         'log',
-        cfg.branch,
         '-n',
         String(cfg.limit),
         `--pretty=format:%H${FIELD_SEP}%h${FIELD_SEP}%ad${FIELD_SEP}%an${FIELD_SEP}%s`,
@@ -61,19 +76,18 @@ function fetchCommitsFromGit (repoRoot, cfg) {
   }
 }
 
-function buildVersionMarkdown (commits, cfg, { generatedAt = new Date() } = {}) {
+function buildVersionMarkdown (commits, cfg) {
   const repoUrl = `https://github.com/${cfg.slug}`
-  const dateStr = generatedAt.toISOString().replace('T', ' ').substring(0, 19)
   const lines = [
     '---',
     'title: 版本记录',
-    `date: ${dateStr}`,
-    'type: page',
-    'comments: false',
-    'top_img: false',
+    'prev: false',
+    'next: false',
     '---',
     '',
-    `本页记录 [${cfg.slug}](${repoUrl}) 仓库的 Git 提交历史（构建时自动获取，最近 ${cfg.limit} 条）。`,
+    '# 版本记录',
+    '',
+    `本页记录 [${cfg.slug}](${repoUrl}) 的提交（构建时自动生成，最近 ${cfg.limit} 条）。`,
     '',
     `[在 GitHub 查看完整提交记录](${repoUrl}/commits/${cfg.branch}/)`,
     '',
@@ -98,17 +112,16 @@ function buildVersionMarkdown (commits, cfg, { generatedAt = new Date() } = {}) 
 
 function syncVersionPage ({
   repoRoot,
-  sourceDir,
-  hexoConfig,
+  docsDir,
   log = console
 }) {
-  const cfg = getRepoConfig(hexoConfig)
-  const dir = path.join(sourceDir, 'version')
-  const file = path.join(dir, 'index.md')
+  const cfg = getRepoConfig()
+  cfg.branch = detectBranch(repoRoot, cfg.branch)
+  const file = path.join(docsDir, 'version', 'index.md')
   const result = fetchCommitsFromGit(repoRoot, cfg)
 
   if (result.error) {
-    const msg = `generate-version: git log failed, ${result.error}`
+    const msg = `version: git log failed, ${result.error}`
     if (typeof log.warn === 'function') log.warn(msg)
     else console.warn(msg)
     return { file, changed: false, commits: [] }
@@ -119,11 +132,8 @@ function syncVersionPage ({
 
   if (changed) {
     const rel = path.relative(repoRoot, file)
-    if (typeof log.info === 'function') {
-      log.info('generate-version: wrote %s', rel)
-    } else {
-      console.log('generate-version: wrote', rel)
-    }
+    if (typeof log.info === 'function') log.info('version: wrote %s', rel)
+    else console.log('version: wrote', rel)
   }
 
   return { file, changed, commits: result }
