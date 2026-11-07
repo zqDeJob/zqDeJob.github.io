@@ -93,7 +93,7 @@ function linksOf (posts: PostEntry[]): SidebarNode[] {
         return {
           text: post.text,
           link: post.link,
-          collapsed: post.text !== '素菜',
+          collapsed: true,
           items
         }
       }
@@ -112,7 +112,7 @@ function categoryItems (posts: PostEntry[], category: string): SidebarNode[] {
   })
   const nested = seriesNames.map((name) => ({
     text: name,
-    collapsed: false,
+    collapsed: true,
     items: linksOf(inCategory.filter((post) => post.series === name))
   })).filter((group) => group.items.length > 0)
   return [...loose, ...nested]
@@ -128,7 +128,7 @@ function buildSidebar () {
   const top = CATEGORY_ORDER
     .map((category) => ({
       text: category,
-      collapsed: false,
+      collapsed: true,
       items: categoryItems(posts, category)
     }))
     .filter((group) => group.items.length > 0)
@@ -136,7 +136,7 @@ function buildSidebar () {
   const comicItems = COMIC_GROUPS
     .map((category) => ({
       text: category,
-      collapsed: false,
+      collapsed: true,
       items: linksOf(posts.filter((post) => post.category === category))
     }))
     .filter((group) => group.items.length > 0)
@@ -144,7 +144,7 @@ function buildSidebar () {
   const extraGroups = extras
     .map((category) => ({
       text: category,
-      collapsed: false,
+      collapsed: true,
       items: linksOf(posts.filter((post) => post.category === category))
     }))
     .filter((group) => group.items.length > 0)
@@ -153,7 +153,7 @@ function buildSidebar () {
   if (comicItems.length > 0) {
     sidebar.push({
       text: COMIC_MODULE,
-      collapsed: false,
+      collapsed: true,
       items: comicItems
     })
   }

@@ -12,13 +12,13 @@ next: false
 
 | 日期 | 提交 | 作者 | 说明 |
 | --- | --- | --- | --- |
-| 2026-06-13 | [d6f0498](https://github.com/zqDeJob/zqDeJob.github.io/commit/d6f04987c3a7048f3ba5f0ea5bb49a9d8a3360ef) | 7angfff | chore: 移除内置pre-commit钩子和相关文档说明 |
-| 2026-06-13 | [45aa30a](https://github.com/zqDeJob/zqDeJob.github.io/commit/45aa30af7c423a9061a37347f3c3965633f18ec2) | 7angfff | fix: 版本页改用 git log 生成，并在 CI 构建前自动同步 |
-| 2026-06-13 | [ccd4d25](https://github.com/zqDeJob/zqDeJob.github.io/commit/ccd4d25e63cff7c2d486638a76e8beff61396a25) | 7angfff | Merge branch 'master' of github.com:zqDeJob/zqDeJob.github.io |
-| 2026-06-13 | [9d4d395](https://github.com/zqDeJob/zqDeJob.github.io/commit/9d4d3950466d5f013b7654e862d0d94c5a3dcd9a) | 7angfff | docs: 新增Stars Manager工具的完整介绍博客文章 - 添加文章所需的封面图和界面预览图片 - 为已有博客文章补充封面图配置 |
-| 2026-06-13 | [f04c1d8](https://github.com/zqDeJob/zqDeJob.github.io/commit/f04c1d862e6e5bd81bca6c14521d56a6a39542a8) | 7angfff | docs: 新增Stars Manager工具的完整介绍博客文章 - 添加文章所需的封面图和界面预览图片 - 为已有博客文章补充封面图配置 |
-| 2026-06-06 | [89badf6](https://github.com/zqDeJob/zqDeJob.github.io/commit/89badf686b767b89d55fb854c8a4b55b3429c477) | 7angfff | docs: 更新机场参考链接地址 |
-| 2026-06-06 | [edd60cd](https://github.com/zqDeJob/zqDeJob.github.io/commit/edd60cdc432bb5f2292999b79f7a119817305d37) | 7angfff | chore: 替换站点favicon和头像为logo.png |
-| 2026-06-06 | [f294f11](https://github.com/zqDeJob/zqDeJob.github.io/commit/f294f11f57ffe0792b510289c81dd342c95c6f96) | 7angfff | docs: add Codex使用教程并更新相关资源 |
-| 2026-06-04 | [130af7b](https://github.com/zqDeJob/zqDeJob.github.io/commit/130af7b0e4889892c8d8c4d5f0ffc8917f1d0268) | zqDeJob | chore: 调整多项配置与页面样式 |
-| 2026-06-04 | [3d94e4e](https://github.com/zqDeJob/zqDeJob.github.io/commit/3d94e4e9ef83eb5efffd60d23c93b83ebd747c1a) | Martin | Merge branch 'master' of https://github.com/zqDeJob/zqDeJob.github.io |
+| 2026-11-07 | [955268d](https://github.com/zqDeJob/zqDeJob.github.io/commit/955268d85aa346298d5585c91c4c6ab823e72f6d) | zqDeJob | feat: 顶栏增加站点访问量与 GitHub Stars |
+| 2026-11-07 | [5fd85c9](https://github.com/zqDeJob/zqDeJob.github.io/commit/5fd85c9d984459f5e19b207a8f696d7465806cae) | zqDeJob | feat: 迁移至 VitePress，并新增快乐机场与 AI 找工作等文章 |
+| 2026-08-14 | [1331c2f](https://github.com/zqDeJob/zqDeJob.github.io/commit/1331c2fb1be4b68a83a75bc088cea32008ee3258) | zqDeJob | 删除误发的 Community Helper 产品介绍文 |
+| 2026-08-14 | [9259c42](https://github.com/zqDeJob/zqDeJob.github.io/commit/9259c42884a4a75a09d54f7ea0a1ef4758ff7a6b) | zqDeJob | 新增文章：Z-Tasking Obsidian 任务台介绍 |
+| 2026-08-14 | [c1e64c8](https://github.com/zqDeJob/zqDeJob.github.io/commit/c1e64c8e0af145394e40170cc49058c745ddaea8) | zqDeJob | 新增文章：Community Helper Obsidian 插件说明书介绍 |
+| 2026-07-02 | [448e6d5](https://github.com/zqDeJob/zqDeJob.github.io/commit/448e6d5b115fa177374a50254bac4a932fd22a74) | Martin | Merge pull request #2 from zqDeJob/dependabot/npm_and_yarn/hexo-generator-index-4.0.0 |
+| 2026-07-02 | [43d820b](https://github.com/zqDeJob/zqDeJob.github.io/commit/43d820b502278e31e32c0eed74e8140f08de95c1) | Martin | Merge pull request #3 from zqDeJob/dependabot/npm_and_yarn/hexo-8.1.2 |
+| 2026-07-02 | [020ffbf](https://github.com/zqDeJob/zqDeJob.github.io/commit/020ffbf3217d463391246e4a8e7654827bdb6190) | zqDeJob | 修复 CI 构建卡住：提交封面并禁用构建时在线拉取 |
+| 2026-07-02 | [9835375](https://github.com/zqDeJob/zqDeJob.github.io/commit/9835375765ad10c1b5d58aa4485897eb9832f0a4) | zqDeJob | 新增文章：从零搭建 Obsidian 插件 Plugin Helper |
+| 2026-06-13 | [082b1b0](https://github.com/zqDeJob/zqDeJob.github.io/commit/082b1b06420f687184cd4cbf73fe0b46db1e6414) | dependabot[bot] | chore(deps): bump hexo from 7.3.0 to 8.1.2 |
