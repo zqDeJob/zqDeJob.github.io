@@ -1,6 +1,7 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { h } from 'vue'
+import BookmarkList from './BookmarkList.vue'
 import Comments from './Comments.vue'
 import DinoGame from './DinoGame.vue'
 import SiteStats from './SiteStats.vue'
@@ -9,6 +10,7 @@ import './custom.css'
 export default {
   extends: DefaultTheme,
   enhanceApp ({ app }) {
+    app.component('BookmarkList', BookmarkList)
     app.component('DinoGame', DinoGame)
   },
   Layout () {

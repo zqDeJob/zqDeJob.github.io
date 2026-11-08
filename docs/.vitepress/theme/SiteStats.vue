@@ -1,18 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-
-const stars = ref<number | null>(null)
-
-async function loadStars () {
-  try {
-    const res = await fetch('https://api.github.com/repos/zqDeJob/zqDeJob.github.io')
-    if (!res.ok) return
-    const data = await res.json()
-    stars.value = typeof data.stargazers_count === 'number' ? data.stargazers_count : 0
-  } catch {
-    // 网络不通时保持占位
-  }
-}
+import { onMounted } from 'vue'
 
 function loadVisits () {
   document.getElementById('vercount-script')?.remove()
@@ -23,28 +10,15 @@ function loadVisits () {
   document.body.appendChild(script)
 }
 
-onMounted(() => {
-  loadStars()
-  loadVisits()
-})
+onMounted(loadVisits)
 </script>
 
 <template>
   <div class="site-stats" aria-label="站点统计">
-    <span class="stat" title="本站总访问量">
-      <span class="label">访问</span>
-      <span id="vercount_value_site_pv" class="value" v-once>…</span>
+    <span class="stat" title="本站访客数，同一浏览器只计一次">
+      <span class="label">访客</span>
+      <span id="vercount_value_site_uv" class="value" v-once>…</span>
     </span>
-    <a
-      class="stat"
-      href="https://github.com/zqDeJob/zqDeJob.github.io"
-      target="_blank"
-      rel="noreferrer"
-      title="GitHub Stars"
-    >
-      <span class="label">Stars</span>
-      <span class="value">{{ stars === null ? '…' : stars }}</span>
-    </a>
   </div>
 </template>
 
@@ -53,7 +27,6 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  gap: 10px;
   margin-right: 14px;
   font-size: 12px;
   line-height: 1;
@@ -70,13 +43,6 @@ onMounted(() => {
   border-radius: 999px;
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-2);
-  text-decoration: none;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-a.stat:hover {
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
 }
 
 .label {
@@ -93,7 +59,6 @@ a.stat:hover {
 @media (max-width: 768px) {
   .site-stats {
     margin-right: 8px;
-    gap: 8px;
   }
 
   .stat {

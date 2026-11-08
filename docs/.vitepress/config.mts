@@ -175,13 +175,14 @@ export default defineConfig({
   lastUpdated: true,
   ignoreDeadLinks: [/^https?:\/\/localhost(?::\d+)?/],
   head: [
-    ['link', { rel: 'icon', href: '/img/logo.jpg' }]
+    ['link', { rel: 'icon', href: '/img/logo.png' }]
   ],
   themeConfig: {
-    logo: '/img/logo.jpg',
+    logo: '/img/logo.png',
     siteTitle: 'zqDeJob避风塘',
     nav: [
       { text: '首页', link: '/' },
+      { text: '收藏 link', link: '/bookmarks/' },
       { text: '版本', link: '/version/' }
     ],
     sidebar: buildSidebar(),
