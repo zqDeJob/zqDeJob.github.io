@@ -56,8 +56,6 @@ const groups = computed(() => {
   return groupSites(bookmarkFile.value, sites.value.filter((site) => !pinned.has(site.url)))
 })
 
-const total = computed(() => sites.value.length)
-
 function unquote (raw: string) {
   const text = raw.trim()
   if (text.length >= 2 && text.startsWith('"') && text.endsWith('"')) {
@@ -185,17 +183,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <p class="meta">
+  <p v-if="loading || error" class="meta">
     <template v-if="loading">正在读取收藏…</template>
-    <template v-else-if="error">
+    <template v-else>
       {{ error }}。可以到
       <a :href="GIST_PAGE" target="_blank" rel="noreferrer">GitHub Gist</a>
       查看。
-    </template>
-    <template v-else>
-      共 {{ total }} 个地址，改
-      <a :href="GIST_PAGE" target="_blank" rel="noreferrer">Gist</a>
-      后刷新本页即可。
     </template>
   </p>
 
