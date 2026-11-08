@@ -4,6 +4,7 @@ import { h } from 'vue'
 import BookmarkList from './BookmarkList.vue'
 import Comments from './Comments.vue'
 import DinoGame from './DinoGame.vue'
+import PanelHoverDemo from './PanelHoverDemo.vue'
 import SiteStats from './SiteStats.vue'
 import './custom.css'
 
@@ -12,6 +13,7 @@ export default {
   enhanceApp ({ app }) {
     app.component('BookmarkList', BookmarkList)
     app.component('DinoGame', DinoGame)
+    app.component('PanelHoverDemo', PanelHoverDemo)
   },
   Layout () {
     return h(DefaultTheme.Layout, null, {
