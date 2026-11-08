@@ -183,13 +183,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <p v-if="loading || error" class="meta">
+  <p class="meta">
     <template v-if="loading">正在读取收藏…</template>
-    <template v-else>
+    <template v-else-if="error">
       {{ error }}。可以到
       <a :href="GIST_PAGE" target="_blank" rel="noreferrer">GitHub Gist</a>
       查看。
     </template>
+    <template v-else>随手存下的网址，按分类列在这里。</template>
   </p>
 
   <section v-if="pinnedSites.length" class="group">
