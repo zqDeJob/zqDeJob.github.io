@@ -16,6 +16,7 @@ interface PostEntry {
   category: string
   series: string
   date: string
+  anchors: boolean
 }
 
 type SidebarNode = {
@@ -53,13 +54,27 @@ function collectPosts (dir: string, posts: PostEntry[]) {
       link: `/${rel}/`,
       category: fm.category,
       series: fm.series || '',
-      date: fm.date || ''
+      date: fm.date || '',
+      anchors: fm.anchors === 'true'
     })
   }
 }
 
 function sortPosts (posts: PostEntry[]) {
   return [...posts].sort((a, b) => a.date.localeCompare(b.date) || a.text.localeCompare(b.text, 'zh'))
+}
+
+// 与 VitePress 标题 id 同一套：NFKD、标点折成连字符、开头数字加下划线、英文小写。
+function headingSlug (title: string): string {
+  return title
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036F]/g, '')
+    .replace(/[\u0000-\u001f]/g, '')
+    .replace(/[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/^(\d)/, '_$1')
+    .toLowerCase()
 }
 
 function dishAnchors (link: string): SidebarNode[] {
@@ -76,9 +91,10 @@ function dishAnchors (link: string): SidebarNode[] {
     }
     if (fence || !line.startsWith('## ')) continue
     const title = line.slice(3).trim()
-    const count = seen.get(title) ?? 0
-    seen.set(title, count + 1)
-    const id = count === 0 ? title : `${title}-${count}`
+    const slug = headingSlug(title)
+    const count = seen.get(slug) ?? 0
+    seen.set(slug, count + 1)
+    const id = count === 0 ? slug : `${slug}-${count}`
     items.push({ text: title, link: `${link}#${id}` })
   }
   return items
@@ -88,7 +104,8 @@ const COOK_SKIP_ANCHORS = new Set(['总览', '厨房准备', '进阶知识'])
 
 function linksOf (posts: PostEntry[]): SidebarNode[] {
   return sortPosts(posts).map((post) => {
-    if (post.series === '程序员做饭指南' && !COOK_SKIP_ANCHORS.has(post.text)) {
+    const withAnchors = post.anchors || (post.series === '程序员做饭指南' && !COOK_SKIP_ANCHORS.has(post.text))
+    if (withAnchors) {
       const items = dishAnchors(post.link)
       if (items.length > 0) {
         return {
