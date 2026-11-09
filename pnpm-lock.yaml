@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       three:
-        specifier: 0.169.0
-        version: 0.169.0
+        specifier: 0.187.0
+        version: 0.187.0
     devDependencies:
       vitepress:
         specifier: ^1.6.3
@@ -745,8 +745,8 @@ packages:
   tabbable@6.5.1:
     resolution: {integrity: sha512-dMCuwDUY6Noz3zVKLefBC4wq+aJV20yc7vWmM7uTNGwtQSFF5kX7OUIUsxuVajz/bdt5Xqdah3/0NLjth+cM5A==}
 
-  three@0.169.0:
-    resolution: {integrity: sha512-Ed906MA3dR4TS5riErd4QBsRGPcx+HBDX2O5yYE5GqJeFQTPU+M56Va/f/Oph9X7uZo3W3o4l2ZhBZ6f6qUv0w==}
+  three@0.187.0:
+    resolution: {integrity: sha512-Qiu7R+Cmh8CstZsY1uJOSWnVlfo7ZtNLV7mF8Jltk3LB3AtDu9cRZlcnRKkAk8Y4z6KKw35z7Y7Urd7jWY8etA==}
 
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
@@ -1538,7 +1538,7 @@ snapshots:
 
   tabbable@6.5.1: {}
 
-  three@0.169.0: {}
+  three@0.187.0: {}
 
   trim-lines@3.0.1: {}
 
