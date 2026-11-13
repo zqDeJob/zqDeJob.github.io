@@ -12,13 +12,13 @@ next: false
 
 | 日期 | 提交 | 作者 | 说明 |
 | --- | --- | --- | --- |
+| 2026-11-10 | [7bb6679](https://github.com/zqDeJob/zqDeJob.github.io/commit/7bb6679d673f815113a3c0445497316401b15341) | zqDeJob | docs: 韩先凯人生进阶指南改成一篇简介 |
+| 2026-11-10 | [1370013](https://github.com/zqDeJob/zqDeJob.github.io/commit/1370013a072cf1404e80c2791ae7f47a38e5ea10) | zqDeJob | feat: 生活乐子收录韩先凯人生进阶指南 |
+| 2026-11-09 | [906cac0](https://github.com/zqDeJob/zqDeJob.github.io/commit/906cac0a2c4c1d2042553bee22d9b34ee8ac7b76) | zqDeJob | feat: 新增网页技术扒一扒，补上 Adrien 刮骷髅和车企看车 |
+| 2026-11-08 | [ba31287](https://github.com/zqDeJob/zqDeJob.github.io/commit/ba31287ce9c2d619a8578b3e0e09fee3df23fc2f) | zqDeJob | fix: 给收藏页补上一句说明 |
+| 2026-11-08 | [de5cf77](https://github.com/zqDeJob/zqDeJob.github.io/commit/de5cf779c36a2b13bea089cf31434ff966e04f6a) | zqDeJob | fix: 去掉收藏页的地址数量说明 |
+| 2026-11-08 | [f3950a2](https://github.com/zqDeJob/zqDeJob.github.io/commit/f3950a2fc22ade2123250b5d332eb62dedecd013) | zqDeJob | feat: 新增 Minimal Monkey 色块展开笔记 |
+| 2026-11-08 | [dd853b0](https://github.com/zqDeJob/zqDeJob.github.io/commit/dd853b0b4d3f58a059b6e60eb6ab0180f7d8a239) | zqDeJob | feat: 新增收藏页并更换站标 |
 | 2026-11-08 | [1058d73](https://github.com/zqDeJob/zqDeJob.github.io/commit/1058d739c838fe065118fda7d8a63dfea3167fb1) | zqDeJob | feat: 新增网页搭建与人物提示词，生活乐子改到漫剧后面 |
 | 2026-11-07 | [4dc1423](https://github.com/zqDeJob/zqDeJob.github.io/commit/4dc1423df056ab674bee4607cd313e4bca1ac9c6) | zqDeJob | fix: 提交 docs/public 静态资源，修复线上小恐龙不显示 |
 | 2026-11-07 | [f4bfc5e](https://github.com/zqDeJob/zqDeJob.github.io/commit/f4bfc5e9ce486381521627bec5766deb7c3ed3ea) | zqDeJob | feat: 新增从0开始 Vibecoding，并优化顶栏统计与首页体验 |
-| 2026-11-07 | [955268d](https://github.com/zqDeJob/zqDeJob.github.io/commit/955268d85aa346298d5585c91c4c6ab823e72f6d) | zqDeJob | feat: 顶栏增加站点访问量与 GitHub Stars |
-| 2026-11-07 | [5fd85c9](https://github.com/zqDeJob/zqDeJob.github.io/commit/5fd85c9d984459f5e19b207a8f696d7465806cae) | zqDeJob | feat: 迁移至 VitePress，并新增快乐机场与 AI 找工作等文章 |
-| 2026-08-14 | [1331c2f](https://github.com/zqDeJob/zqDeJob.github.io/commit/1331c2fb1be4b68a83a75bc088cea32008ee3258) | zqDeJob | 删除误发的 Community Helper 产品介绍文 |
-| 2026-08-14 | [9259c42](https://github.com/zqDeJob/zqDeJob.github.io/commit/9259c42884a4a75a09d54f7ea0a1ef4758ff7a6b) | zqDeJob | 新增文章：Z-Tasking Obsidian 任务台介绍 |
-| 2026-08-14 | [c1e64c8](https://github.com/zqDeJob/zqDeJob.github.io/commit/c1e64c8e0af145394e40170cc49058c745ddaea8) | zqDeJob | 新增文章：Community Helper Obsidian 插件说明书介绍 |
-| 2026-07-02 | [448e6d5](https://github.com/zqDeJob/zqDeJob.github.io/commit/448e6d5b115fa177374a50254bac4a932fd22a74) | Martin | Merge pull request #2 from zqDeJob/dependabot/npm_and_yarn/hexo-generator-index-4.0.0 |
-| 2026-07-02 | [43d820b](https://github.com/zqDeJob/zqDeJob.github.io/commit/43d820b502278e31e32c0eed74e8140f08de95c1) | Martin | Merge pull request #3 from zqDeJob/dependabot/npm_and_yarn/hexo-8.1.2 |
